@@ -6,7 +6,7 @@
 /*   By: vfiszbin <vfiszbin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:57:36 by vfiszbin          #+#    #+#             */
-/*   Updated: 2022/05/26 15:05:24 by vfiszbin         ###   ########.fr       */
+/*   Updated: 2022/05/26 18:53:50 by vfiszbin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	print_stack(t_list *stack)
 {
 	while (stack){
-		ft_printf("%d ", (int*)(stack->content));
+		ft_printf("%d ", (stack->content));
 		stack = stack->next;
 	}
 	ft_printf("\n");
@@ -51,4 +51,19 @@ t_list	*pop_node(t_list **lst, t_list *node)
 		cur = cur->next;
 	}
 	return NULL;
+}
+
+/*Free all memeory allocated for the list*/
+void	free_list(t_list *lst)
+{
+	t_list	*tmp;
+	t_list	*cur;
+
+	cur = lst;
+	while (cur)
+	{
+		tmp = cur;
+		cur = cur->next;
+		free(tmp);
+	}
 }

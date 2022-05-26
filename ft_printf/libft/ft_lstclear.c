@@ -6,7 +6,7 @@
 /*   By: vfiszbin <vfiszbin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 10:41:04 by vfiszbin          #+#    #+#             */
-/*   Updated: 2022/05/26 11:21:35 by vfiszbin         ###   ########.fr       */
+/*   Updated: 2022/05/26 18:40:44 by vfiszbin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ successor of that node, using the function ’del’
 and free.
 Finally, the pointer to the list must be set to
 NULL*/
-void	ft_lstclear(t_list **lst, void (*del)(void*))
+void	ft_lstclear(t_list **lst, void (*del)(int))
 {
 	t_list	*tmp;
 	t_list	*cur;

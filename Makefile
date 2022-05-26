@@ -6,7 +6,7 @@
 #    By: vfiszbin <vfiszbin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/20 19:36:03 by vfiszbin          #+#    #+#              #
-#    Updated: 2022/05/26 12:29:34 by vfiszbin         ###   ########.fr        #
+#    Updated: 2022/05/26 16:27:56 by vfiszbin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ FT_PRINTF = libftprintf.a
 CC = gcc
 RM = rm -f
 
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g
 
 all: ${FT_PRINTF} push_swap
 

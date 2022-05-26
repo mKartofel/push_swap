@@ -6,7 +6,7 @@
 /*   By: vfiszbin <vfiszbin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:15 by vfiszbin          #+#    #+#             */
-/*   Updated: 2022/05/26 15:08:48 by vfiszbin         ###   ########.fr       */
+/*   Updated: 2022/05/26 18:19:13 by vfiszbin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ void rr(t_list **stack_a, t_list **stack_b);
 void rra(t_list **stack_a);
 void rrb(t_list **stack_b);
 void rrr(t_list **stack_a, t_list **stack_b);
+void	free_list(t_list *lst);
 
 #endif
