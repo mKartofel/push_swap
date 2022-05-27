@@ -6,7 +6,7 @@
 /*   By: vfiszbin <vfiszbin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:57:36 by vfiszbin          #+#    #+#             */
-/*   Updated: 2022/05/26 18:53:50 by vfiszbin         ###   ########.fr       */
+/*   Updated: 2022/05/27 11:47:51 by vfiszbin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,15 @@ void	print_stack(t_list *stack)
 {
 	while (stack){
 		ft_printf("%d ", (stack->content));
+		stack = stack->next;
+	}
+	ft_printf("\n");
+}
+
+void	print_stack_rank(t_list *stack)
+{
+	while (stack){
+		ft_printf("%d ", (stack->rank));
 		stack = stack->next;
 	}
 	ft_printf("\n");
@@ -42,8 +51,6 @@ t_list	*pop_node(t_list **lst, t_list *node)
 		if (cur == node)
 		{
 			prev->next = cur->next;
-			// ft_printf("cur = %d ", (int*)(cur->content));
-			// ft_printf("prev = %d ", (int*)(prev->content));
 			cur->next = NULL;
 			return cur;
 		}
@@ -66,4 +73,12 @@ void	free_list(t_list *lst)
 		cur = cur->next;
 		free(tmp);
 	}
+}
+
+/*Test if the stack i sempty*/
+int stack_is_empty(t_list *stack)
+{
+	if (stack == NULL)
+		return (1);
+	return (0);
 }

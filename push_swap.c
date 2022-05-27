@@ -6,7 +6,7 @@
 /*   By: vfiszbin <vfiszbin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:48:37 by vfiszbin          #+#    #+#             */
-/*   Updated: 2022/05/26 19:02:34 by vfiszbin         ###   ########.fr       */
+/*   Updated: 2022/05/27 12:35:50 by vfiszbin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,131 @@ void check_arg_is_digit(char *arg, t_list *stack_a, t_list *stack_b)
 	}
 }
 
+/*Check whether the argument is a duplicate of an existing element of the stack*/
+void check_arg_is_duplicate(int num, t_list *stack_a, t_list *stack_b)
+{
+	t_list *cur;
+
+	cur = stack_a;
+	while(cur)
+	{
+		if (cur->content == num)
+			exit_program(stack_a, stack_b);
+		cur = cur->next;
+	}
+}
+
+/*Check if the argument is a valid C integer that does not overflow/underflow*/
+void check_arg_is_int(char *arg, int num, t_list *stack_a, t_list *stack_b)
+{
+	char *num_str;
+	
+	num_str = ft_itoa(num);
+	if (!num_str)
+		exit_program(stack_a, stack_b);
+	if (ft_strncmp(arg, num_str, ft_strlen(num_str)) != 0){
+		free(num_str);
+		exit_program(stack_a, stack_b);
+	}
+	free(num_str);
+}
+
+/*Check if the stack_a is already sorted*/
+void check_stack_sorted(t_list *stack_a, t_list *stack_b, int stack_a_size)
+{
+	t_list *cur;
+	t_list *prev;
+
+	if (stack_a_size <= 1){
+		free_list(stack_a);
+		free_list(stack_b);
+		exit(1);
+	}
+		
+	prev = stack_a;
+	cur = stack_a->next;
+	while(cur)
+	{
+		if (prev->content > cur->content)
+			return ;
+		prev = cur;
+		cur = cur->next;
+	}
+	free_list(stack_a);
+	free_list(stack_b);
+	exit(1);
+}
+
+/*Assign its rank to every element of the stack_a*/
+void assign_rank(t_list *stack_a, t_list *stack_b, int stack_a_size)
+{
+	int *sorted_tab;
+	int rank;
+	t_list *cur;
+
+	sorted_tab = malloc(sizeof(int) * stack_a_size);
+	if (!sorted_tab)
+		exit_program(stack_a, stack_b);
+	cur = stack_a;
+	rank = 0;
+	while(cur)
+	{
+		sorted_tab[rank] = cur->content;
+		rank++;
+		cur = cur->next;
+	}
+	quicksort(sorted_tab, 0, stack_a_size - 1);
+	cur = stack_a;
+	while(cur)
+	{
+		rank = 0;
+		while (cur->content != sorted_tab[rank])
+			rank++;
+		cur->rank = rank;
+		cur = cur->next;
+	}
+	free(sorted_tab);
+}
+
+/*Sort stack_a using the radix sorting algorithm.
+Numbers are sorted from least significant (rightmost) to most significant (leftmost) bit.
+For each significant bit, the numbers whose corresponding bit is 0 (smaller) are pushed to stack b (pb),
+while the numbers whose corresponding bit is 1 (bigger) are kept in stack a by rotating them to the bottom of the stack (ra).
+Then all numbers in stack b are pushed back on top of stack a (pa).
+We then repeat the operation for all the next (more) significant bits, which progressively sort all number in stack a*/
+void radix_sort(t_list **stack_a, t_list **stack_b, int stack_a_size)
+{
+	int max_rank;
+	int max_bits;
+	int top_of_a;
+
+	max_rank = stack_a_size -1;
+	max_bits = 0;
+	while ((max_rank >> max_bits) != 0) 
+		++max_bits;
+	for (int i = 0 ; i < max_bits ; ++i)
+	{
+		for(int j = 0 ; j < stack_a_size ; ++j)
+		{
+			top_of_a = (*stack_a)->rank;
+			if (((top_of_a >> i) & 1) == 1) 
+				ra(stack_a); 	
+			else 
+				pb(stack_a, stack_b);
+		}
+		while (!stack_is_empty(*stack_b)) 
+			pa(stack_a, stack_b);
+	}
+}
+
 int main(int argc, char ** argv)
 {
 	t_list *stack_a;
 	t_list *stack_b;
 	t_list *node;
 	int i;
+	int num;
+	int stack_a_size;
 	
 	stack_a = NULL;
 	stack_b = NULL;
@@ -109,12 +228,24 @@ int main(int argc, char ** argv)
 	
 	for(i = argc - 1; i > 0; i--){
 		check_arg_is_digit(argv[i], stack_a, stack_b);
-		node = ft_lstnew(ft_atoi(argv[i]));
+		num = ft_atoi(argv[i]);
+		node = ft_lstnew(num);
 		if (!node)
 			exit_program(stack_a, stack_b);
+		check_arg_is_int(argv[i], num, stack_a, stack_b);
+		check_arg_is_duplicate(num, stack_a, stack_b);
 		ft_lstadd_front(&stack_a, node);
 	}
+	stack_a_size = ft_lstsize(stack_a);
+	check_stack_sorted(stack_a, stack_b, stack_a_size);
+	// print_stack(stack_a);
+	// print_stack(stack_b);
+	
+	assign_rank(stack_a, stack_b, stack_a_size);
+	// print_stack_rank(stack_a);
+	// print_stack_rank(stack_b);
 
+	radix_sort(&stack_a, &stack_b, stack_a_size);
 	// print_stack(stack_a);
 	// print_stack(stack_b);
 
@@ -126,12 +257,12 @@ int main(int argc, char ** argv)
 	// node = ft_lstnew((void*)6);
 	// ft_lstadd_back(&stack_a,node);
 
-	sort_stack(&stack_a, &stack_b);
+	// sort_stack(&stack_a, &stack_b);
 	// ft_printf("\nafter sort :\n");
 	// print_stack(stack_a);
 	// print_stack(stack_b);
 
-	push_all_b_to_a(&stack_a, &stack_b);
+	// push_all_b_to_a(&stack_a, &stack_b);
 
 	// ft_printf("\nafter push all b to a :\n");
 	// print_stack(stack_a);

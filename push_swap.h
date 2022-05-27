@@ -6,7 +6,7 @@
 /*   By: vfiszbin <vfiszbin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:15 by vfiszbin          #+#    #+#             */
-/*   Updated: 2022/05/26 18:19:13 by vfiszbin         ###   ########.fr       */
+/*   Updated: 2022/05/27 11:48:31 by vfiszbin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,8 @@ void rra(t_list **stack_a);
 void rrb(t_list **stack_b);
 void rrr(t_list **stack_a, t_list **stack_b);
 void	free_list(t_list *lst);
+int quicksort(int *t, int begin, int end);
+void	print_stack_rank(t_list *stack);
+int stack_is_empty(t_list *stack);
 
 #endif

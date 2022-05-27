@@ -6,7 +6,7 @@
 /*   By: vfiszbin <vfiszbin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 20:00:48 by vfiszbin          #+#    #+#             */
-/*   Updated: 2022/05/26 18:51:53 by vfiszbin         ###   ########.fr       */
+/*   Updated: 2022/05/27 11:04:35 by vfiszbin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	ft_putnbr_fd(int n, int fd);
 typedef struct s_list
 {
 	int 			content;
+	int				rank;
 	struct s_list	*next;
 }	t_list;
 
