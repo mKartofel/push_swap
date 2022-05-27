@@ -6,18 +6,20 @@
 /*   By: vfiszbin <vfiszbin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:48:37 by vfiszbin          #+#    #+#             */
-/*   Updated: 2022/05/27 17:20:58 by vfiszbin         ###   ########.fr       */
+/*   Updated: 2022/05/27 17:46:42 by vfiszbin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 /*Free the two stacks before writing Error in stderror and exiting program*/
-void	exit_program(t_list *stack_a, t_list *stack_b)
+void	exit_program(t_list *stack_a, t_list *stack_b, t_list *node)
 {
 	write(2, "Error\n", 6);
 	free_list(stack_a);
 	free_list(stack_b);
+	if (node != NULL)
+		free(node);
 	exit(1);
 }
 
@@ -45,7 +47,7 @@ void	assign_rank(t_list *stack_a, t_list *stack_b, int stack_a_size)
 
 	sorted_tab = malloc(sizeof(int) * stack_a_size);
 	if (!sorted_tab)
-		exit_program(stack_a, stack_b);
+		exit_program(stack_a, stack_b, NULL);
 	fill_tab(sorted_tab, stack_a);
 	quicksort(sorted_tab, 0, stack_a_size - 1);
 	cur = stack_a;
@@ -73,10 +75,10 @@ void	init_stack(t_list **stack_a, t_list **stack_b, int argc, char **argv)
 		num = ft_atoi(argv[i]);
 		node = ft_lstnew(num);
 		if (!node)
-			exit_program(*stack_a, *stack_b);
-		check_arg_is_int(argv[i], num, *stack_a, *stack_b);
-		check_arg_is_duplicate(num, *stack_a, *stack_b);
+			exit_program(*stack_a, *stack_b, NULL);
+		check_arg_is_duplicate(num, *stack_a, *stack_b, node);
 		ft_lstadd_front(stack_a, node);
+		check_arg_is_int(argv[i], num, *stack_a, *stack_b);
 		i--;
 	}
 }

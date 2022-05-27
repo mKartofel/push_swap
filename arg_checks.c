@@ -6,7 +6,7 @@
 /*   By: vfiszbin <vfiszbin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 16:41:31 by vfiszbin          #+#    #+#             */
-/*   Updated: 2022/05/27 17:21:17 by vfiszbin         ###   ########.fr       */
+/*   Updated: 2022/05/27 17:47:14 by vfiszbin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,19 @@ void	check_arg_is_digit(char *arg, t_list *stack_a, t_list *stack_b)
 	int	i;
 
 	if (arg[0] != '-' && !ft_isdigit(arg[0]))
-		exit_program(stack_a, stack_b);
+		exit_program(stack_a, stack_b, NULL);
 	i = 1;
 	while (arg[i])
 	{
 		if (!ft_isdigit(arg[i]))
-			exit_program(stack_a, stack_b);
+			exit_program(stack_a, stack_b, NULL);
 		i++;
 	}
 }
 
 /*Check whether the argument is a duplicate of an existing element of
 the stack*/
-void	check_arg_is_duplicate(int num, t_list *stack_a, t_list *stack_b)
+void	check_arg_is_duplicate(int num, t_list *stack_a, t_list *stack_b, t_list *node)
 {
 	t_list	*cur;
 
@@ -38,7 +38,7 @@ void	check_arg_is_duplicate(int num, t_list *stack_a, t_list *stack_b)
 	while (cur)
 	{
 		if (cur->content == num)
-			exit_program(stack_a, stack_b);
+			exit_program(stack_a, stack_b, node);
 		cur = cur->next;
 	}
 }
@@ -50,11 +50,11 @@ void	check_arg_is_int(char *arg, int num, t_list *stack_a, t_list *stack_b)
 
 	num_str = ft_itoa(num);
 	if (!num_str)
-		exit_program(stack_a, stack_b);
+		exit_program(stack_a, stack_b, NULL);
 	if (ft_strncmp(arg, num_str, ft_strlen(num_str)) != 0)
 	{
 		free(num_str);
-		exit_program(stack_a, stack_b);
+		exit_program(stack_a, stack_b, NULL);
 	}
 	free(num_str);
 }
