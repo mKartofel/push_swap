@@ -6,7 +6,7 @@
 /*   By: vfiszbin <vfiszbin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:48:37 by vfiszbin          #+#    #+#             */
-/*   Updated: 2022/05/27 12:35:50 by vfiszbin         ###   ########.fr       */
+/*   Updated: 2022/05/27 15:49:21 by vfiszbin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,6 +211,62 @@ void radix_sort(t_list **stack_a, t_list **stack_b, int stack_a_size)
 	}
 }
 
+/*Sort a stack containing 2 numbers*/
+void sort_stack_of_2(t_list **stack_a)
+{
+	sa(*stack_a);
+}
+
+/*Sort a stack containing 3 numbers, there are only
+5 possible combinations*/
+void sort_stack_of_3(t_list **stack_a)
+{
+	int first;
+	int mid;
+	int last;
+
+	first = (*stack_a)->content;
+	mid = (*stack_a)->next->content;
+	last = (*stack_a)->next->next->content;
+	
+	if (first > mid && mid < last && first < last)
+		sa(*stack_a);
+	else if (first > mid && mid > last && first > last){
+		sa(*stack_a);
+		rra(stack_a);
+	}
+	else if (first > mid && mid < last && first > last)
+		ra(stack_a);
+	else if (first < mid && mid > last && first < last){
+		sa(*stack_a);
+		ra(stack_a);
+	}
+	else if (first < mid && mid > last && first > last)
+		rra(stack_a);
+}
+
+/*Sort a stack containing 5 numbers*/
+void sort_stack_of_5(t_list **stack_a, t_list **stack_b, int stack_a_size)
+{
+	assign_rank(*stack_a, *stack_b, stack_a_size);
+	while (ft_lstsize(*stack_b) < 2){
+		if ((*stack_a)->rank == 0 || (*stack_a)->rank == 4)
+			pb(stack_a, stack_b);
+		else
+			ra(stack_a);
+	}
+	sort_stack_of_3(stack_a);
+	// ft_printf("\nafter sort 3 :\n");
+	// print_stack(*stack_a);
+	// print_stack(*stack_b);
+	// ft_printf("---\n");
+	for (int i = 0; i < 2; i++){
+		pa(stack_a, stack_b);
+		if ((*stack_a)->rank == 4)
+			ra(stack_a);
+	}
+}
+
 int main(int argc, char ** argv)
 {
 	t_list *stack_a;
@@ -240,92 +296,86 @@ int main(int argc, char ** argv)
 	check_stack_sorted(stack_a, stack_b, stack_a_size);
 	// print_stack(stack_a);
 	// print_stack(stack_b);
-	
-	assign_rank(stack_a, stack_b, stack_a_size);
-	// print_stack_rank(stack_a);
-	// print_stack_rank(stack_b);
 
-	radix_sort(&stack_a, &stack_b, stack_a_size);
-	// print_stack(stack_a);
-	// print_stack(stack_b);
-
-
-	// node = ft_lstnew((void*)4); //prot
-	// ft_lstadd_back(&stack_a,node);
-	// node = ft_lstnew((void*)3);
-	// ft_lstadd_back(&stack_a,node);
-	// node = ft_lstnew((void*)6);
-	// ft_lstadd_back(&stack_a,node);
-
-	// sort_stack(&stack_a, &stack_b);
-	// ft_printf("\nafter sort :\n");
-	// print_stack(stack_a);
-	// print_stack(stack_b);
-
-	// push_all_b_to_a(&stack_a, &stack_b);
-
-	// ft_printf("\nafter push all b to a :\n");
-	// print_stack(stack_a);
-	// print_stack(stack_b);
-	
-	//Tests operations
-	// node = ft_lstnew((void*)4); //prot
-	// ft_lstadd_back(&stack_a,node);
-	// node = ft_lstnew((void*)3);
-	// ft_lstadd_back(&stack_a,node);
-	// node = ft_lstnew((void*)6);
-	// ft_lstadd_back(&stack_a,node);
-
-	// node = ft_lstnew((void*)7); //prot
-	// ft_lstadd_back(&stack_b,node);
-	// node = ft_lstnew((void*)2);
-	// ft_lstadd_back(&stack_b,node);
-	// node = ft_lstnew((void*)9);
-	// ft_lstadd_back(&stack_b,node);
+	if (stack_a_size == 2)
+		sort_stack_of_2(&stack_a);
+	else if (stack_a_size == 3)
+		sort_stack_of_3(&stack_a);
+	else if (stack_a_size == 5)
+		sort_stack_of_5(&stack_a, &stack_b, stack_a_size);
+	else{
+		assign_rank(stack_a, stack_b, stack_a_size);
+		radix_sort(&stack_a, &stack_b, stack_a_size);
+	}
 
 	// print_stack(stack_a);
 	// print_stack(stack_b);
 
-	// sa(stack_a);
-	// sb(stack_b);
-	// ft_printf("\nsa & sb :\n");
-	// print_stack(stack_a);
-	// print_stack(stack_b);
+	free_list(stack_a);
+	free_list(stack_b);
 
-	// ss(stack_a, stack_b);
-	// ft_printf("\nss :\n");
-	// print_stack(stack_a);
-	// print_stack(stack_b);
 
-	// pa(&stack_a, &stack_b);
-	// ft_printf("\npa :\n");
-	// print_stack(stack_a);
-	// print_stack(stack_b);
 
-	// pb(&stack_a, &stack_b);
-	// ft_printf("\npb :\n");
-	// print_stack(stack_a);
-	// print_stack(stack_b);
-
-	// ra(&stack_a);
-	// rb(&stack_b);
-	// ft_printf("\nra & rb :\n");
-	// print_stack(stack_a);
-	// print_stack(stack_b);
-
-	// rr(&stack_a, &stack_b);
-	// ft_printf("\nrr :\n");
-	// print_stack(stack_a);
-	// print_stack(stack_b);
-
-	// rra(&stack_a);
-	// rrb(&stack_b);
-	// ft_printf("\nrra & rrb:\n");
-	// print_stack(stack_a);
-	// print_stack(stack_b);
-	
-	// rrr(&stack_a, &stack_b);
-	// ft_printf("\nrrr :\n");
-	// print_stack(stack_a);
-	// print_stack(stack_b);
 }
+
+
+//Tests operations	
+// node = ft_lstnew((void*)4); //prot
+// ft_lstadd_back(&stack_a,node);
+// node = ft_lstnew((void*)3);
+// ft_lstadd_back(&stack_a,node);
+// node = ft_lstnew((void*)6);
+// ft_lstadd_back(&stack_a,node);
+
+// node = ft_lstnew((void*)7); //prot
+// ft_lstadd_back(&stack_b,node);
+// node = ft_lstnew((void*)2);
+// ft_lstadd_back(&stack_b,node);
+// node = ft_lstnew((void*)9);
+// ft_lstadd_back(&stack_b,node);
+
+// print_stack(stack_a);
+// print_stack(stack_b);
+
+// sa(stack_a);
+// sb(stack_b);
+// ft_printf("\nsa & sb :\n");
+// print_stack(stack_a);
+// print_stack(stack_b);
+
+// ss(stack_a, stack_b);
+// ft_printf("\nss :\n");
+// print_stack(stack_a);
+// print_stack(stack_b);
+
+// pa(&stack_a, &stack_b);
+// ft_printf("\npa :\n");
+// print_stack(stack_a);
+// print_stack(stack_b);
+
+// pb(&stack_a, &stack_b);
+// ft_printf("\npb :\n");
+// print_stack(stack_a);
+// print_stack(stack_b);
+
+// ra(&stack_a);
+// rb(&stack_b);
+// ft_printf("\nra & rb :\n");
+// print_stack(stack_a);
+// print_stack(stack_b);
+
+// rr(&stack_a, &stack_b);
+// ft_printf("\nrr :\n");
+// print_stack(stack_a);
+// print_stack(stack_b);
+
+// rra(&stack_a);
+// rrb(&stack_b);
+// ft_printf("\nrra & rrb:\n");
+// print_stack(stack_a);
+// print_stack(stack_b);
+
+// rrr(&stack_a, &stack_b);
+// ft_printf("\nrrr :\n");
+// print_stack(stack_a);
+// print_stack(stack_b);
