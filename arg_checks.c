@@ -6,7 +6,7 @@
 /*   By: vfiszbin <vfiszbin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 16:41:31 by vfiszbin          #+#    #+#             */
-/*   Updated: 2022/05/27 17:47:14 by vfiszbin         ###   ########.fr       */
+/*   Updated: 2022/05/27 17:56:05 by vfiszbin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	check_arg_is_digit(char *arg, t_list *stack_a, t_list *stack_b)
 
 /*Check whether the argument is a duplicate of an existing element of
 the stack*/
-void	check_arg_is_duplicate(int num, t_list *stack_a, t_list *stack_b, t_list *node)
+void	check_duplicate(int num, t_list *stack_a, t_list *stack_b, t_list *n)
 {
 	t_list	*cur;
 
@@ -38,7 +38,7 @@ void	check_arg_is_duplicate(int num, t_list *stack_a, t_list *stack_b, t_list *n
 	while (cur)
 	{
 		if (cur->content == num)
-			exit_program(stack_a, stack_b, node);
+			exit_program(stack_a, stack_b, n);
 		cur = cur->next;
 	}
 }

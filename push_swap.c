@@ -6,7 +6,7 @@
 /*   By: vfiszbin <vfiszbin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:48:37 by vfiszbin          #+#    #+#             */
-/*   Updated: 2022/05/27 17:46:42 by vfiszbin         ###   ########.fr       */
+/*   Updated: 2022/05/27 17:56:29 by vfiszbin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	init_stack(t_list **stack_a, t_list **stack_b, int argc, char **argv)
 		node = ft_lstnew(num);
 		if (!node)
 			exit_program(*stack_a, *stack_b, NULL);
-		check_arg_is_duplicate(num, *stack_a, *stack_b, node);
+		check_duplicate(num, *stack_a, *stack_b, node);
 		ft_lstadd_front(stack_a, node);
 		check_arg_is_int(argv[i], num, *stack_a, *stack_b);
 		i--;

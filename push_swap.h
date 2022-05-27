@@ -6,7 +6,7 @@
 /*   By: vfiszbin <vfiszbin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:15 by vfiszbin          #+#    #+#             */
-/*   Updated: 2022/05/27 17:46:03 by vfiszbin         ###   ########.fr       */
+/*   Updated: 2022/05/27 17:55:21 by vfiszbin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	free_list(t_list *lst);
 int		quicksort(int *t, int begin, int end);
 int		stack_is_empty(t_list *stack);
 void	check_arg_is_digit(char *arg, t_list *stack_a, t_list *stack_b);
-void	check_arg_is_duplicate(int num, t_list *stack_a, t_list *stack_b, t_list *node);
+void	check_duplicate(int num, t_list *stack_a, t_list *stack_b, t_list *n);
 void	check_arg_is_int(char *arg, int num, t_list *stack_a, t_list *stack_b);
 void	check_stack_sorted(t_list *stack_a, t_list *stack_b, int stack_a_size);
 void	exit_program(t_list *stack_a, t_list *stack_b, t_list *node);
